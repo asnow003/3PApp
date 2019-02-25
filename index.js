@@ -1,13 +1,21 @@
-var http = require('http');
+var express = require('express');
+var app = express();
+var path = require('path');
 
-var server = http.createServer(function(request, response) {
 
-    response.writeHead(200, {"Content-Type": "text/plain"});
-    response.end("Hello World!");
+// Initialize variables.
+var port = 1530;
 
+app.use("/js", express.static(path.join(__dirname, "js")));
+
+app.get('/', function (req, res) {
+    res.sendFile(path.join(__dirname + '/index.html'));
 });
 
-var port = process.env.PORT || 1337;
-server.listen(port);
+app.get('/index.html', function (req, res) {
+    res.sendFile(path.join(__dirname + '/index.html'));
+});
 
-console.log("Server running at http://localhost:%d", port);
+// Start the server.
+app.listen(port);
+console.log('Listening on port ' + port + '...'); 
