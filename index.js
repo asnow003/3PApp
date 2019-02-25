@@ -1,27 +1,13 @@
-/*
-*  Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license.
-*  See LICENSE in the source repository root for complete license information.
-*/
+var http = require('http');
 
-var express = require('express');
-var app = express();
-var morgan = require('morgan');
-var path = require('path');
+var server = http.createServer(function(request, response) {
 
-// Initialize variables.
-var port = 30662; // process.env.PORT || 30662;
+    response.writeHead(200, {"Content-Type": "text/plain"});
+    response.end("Hello World!");
 
-// Configure morgan module to log all requests.
-app.use(morgan('dev'));
-
-// Set the front-end folder to serve public assets.
-app.use(express.static('JavaScriptSPA'))
-
-// Set up our one route to the index.html file.
-app.get('*', function (req, res) {
-    res.sendFile(path.join(__dirname + '/index.html'));
 });
 
-// Start the server.
-app.listen(port);
-console.log('Listening on port ' + port + '...');
+var port = process.env.PORT || 1337;
+server.listen(port);
+
+console.log("Server running at http://localhost:%d", port);
